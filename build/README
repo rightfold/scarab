@@ -1,0 +1,9 @@
+The files /build/build.bash and /build/install.bash are sourced by the Nix
+derivation. See /default.nix for more information.
+
+Composer is used to generate the autoloader. Composer is not used for
+downloading packages because you cannot perform network operations inside a Nix
+derivation.
+
+Psalm is used for type checking all PHP code in the lib directory. The entry
+points are currently not type checked.

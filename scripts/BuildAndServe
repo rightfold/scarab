@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -o errexit
+nix-build
+nix-shell --run '
+    set -o errexit
+    set -o nounset
+    cd result/web
+    php -S "$SCARAB_APPLICATION_HOST:$SCARAB_APPLICATION_PORT"
+'

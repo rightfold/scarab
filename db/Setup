@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# TODO: Make this script idempotent so it can be run more than once.
+
+if [[ "$(whoami)" != 'postgres' ]]; then
+    >&2 echo "$0 must run as 'postgres', not as '$(whoami)'."
+    exit 1
+fi
+
+psql <<'EOF'
+    CREATE ROLE scarab_application LOGIN PASSWORD 'scarab_application';
+    CREATE ROLE scarab_migrations LOGIN PASSWORD 'scarab_migrations';
+    CREATE DATABASE scarab OWNER scarab_migrations;
+EOF
+
+PGDATABASE=scarab psql <<'EOF'
+    DROP SCHEMA public;
+EOF

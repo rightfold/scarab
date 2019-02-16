@@ -1,0 +1,8 @@
+%syntax-version=1.0.0
+%project=scarab
+
+CreateSchema 2019-02-18T20:33:57Z r <r@chloe-notebook> # Create schema
+CreateTicketsTable [CreateSchema] 2019-02-18T20:41:16Z r <r@chloe-notebook> # Create tickets table
+AddConclusionColumn [CreateTicketsTable] 2019-02-21T18:05:45Z r <r@chloe-notebook> # Add conclusion column
+CreateTicketCommentsTable [CreateTicketsTable] 2019-02-23T11:54:53Z r <r@chloe-notebook> # Create ticket comments table
+AddAuthorColumns [CreateTicketsTable CreateTicketCommentsTable] 2019-03-16T11:53:11Z r <r@chloe-notebook> # Add author columns

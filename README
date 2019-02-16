@@ -1,0 +1,4 @@
+Scarab is a bug tracker.
+
+To run the development server, run scripts/BuildAndServe. The only requirement
+is that Nix is installed. There are no further dependencies.

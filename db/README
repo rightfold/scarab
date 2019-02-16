@@ -1,0 +1,2 @@
+Sqitch is used for the database migrations. Run Sqitch using /scripts/Sqitch.
+The verification feature is not used.

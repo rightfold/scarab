@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+command='sqitch'
+for argument in "$@"; do
+    printf -v command '%s %q' "$command" "$argument"
+done
+nix-shell --run "cd db && $command"

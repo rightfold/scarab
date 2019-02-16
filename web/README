@@ -1,0 +1,9 @@
+The /web directory contains the entry points of the application. They are
+directly requested by the client. To write a new entry point, create a file
+in this directory with the following format:
+
+    <?php
+    require_once __DIR__ . '/bootstrap.php';
+    \Scarab\Main::<handle>();
+
+See the file /web/bootstrap.php for more information.

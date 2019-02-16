@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<psalm totallyTyped="true"
+       strictBinaryOperands="true">
+    <projectFiles>
+        <directory name="lib" />
+    </projectFiles>
+    <issueHandlers>
+        <ForbiddenCode errorLevel="suppress" />
+    </issueHandlers>
+</psalm>

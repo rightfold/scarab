@@ -1,0 +1,225 @@
+@import 'Reset';
+
+@import 'Settings';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: $background1;
+    /*
+    background-image: linear-gradient(silver 0px, white 1px, white $gr * $unit - 1px);
+    background-size: 1px $gr * $unit;
+    // */
+    color: $foreground1;
+    font-family: $fontFamily1;
+    font-size: $unit;
+}
+
+@mixin Scarab_Heading() {
+    font-weight: bold;
+    line-height: $gr;
+}
+
+@mixin Scarab_DataTable() {
+    width: 100%;
+
+    & > thead, & > tbody, & > tfoot {
+        & > tr {
+            & > th {
+                background: $foreground3;
+                font-weight: bold;
+            }
+
+            & > th, & > td {
+                border: solid 1px $foreground2;
+                // TODO: This should really be $gr. How to properly remove 1px
+                // TODO: from the cell height?
+                line-height: $gr * $unit - 1px;
+                padding: 0 $unit / 2;
+            }
+        }
+    }
+}
+
+@mixin Scarab_PropertiesTable() {
+    width: 100%;
+
+    & > tbody {
+        & > tr {
+            & > th {
+                background: $foreground3;
+                font-weight: bold;
+                text-align: left;
+                width: 15%;
+            }
+
+            & > td {
+                width: 85%;
+            }
+
+            & > th, & > td {
+                border: solid 1px $foreground2;
+                // TODO: This should really be $gr. How to properly remove 1px
+                // TODO: from the cell height?
+                line-height: $gr * $unit - 1px;
+                padding: 0 $unit / 2;
+            }
+        }
+    }
+}
+
+@mixin Scarab_Form {
+    display: grid;
+    gap: $gr * $unit;
+    grid-template-columns: 1fr 3fr 1fr 3fr;
+
+    & > label {
+        font-weight: bold;
+        line-height: $gr;
+    }
+
+    &, & > div {
+        & > input, & > button, & > textarea {
+            border: solid 1px $foreground2;
+            // TODO: This should really be $gr. How to properly remove 1px from
+            // TODO: the field height?
+            line-height: $gr * $unit - 2px;
+            padding: 0 $unit / 2;
+        }
+    }
+}
+
+@mixin Scarab_Preformatted {
+    font-family: $fontFamily2;
+    line-height: $gr;
+    white-space: pre-wrap;
+}
+
+.Scarab_Container {
+    max-width: 960px;
+    margin: $gr * $unit auto;
+}
+
+.Scarab_Title {
+    font-size: 4 * $unit;
+    font-weight: bold;
+    line-height: $gr;
+}
+
+// TODO: Move this to lib/Scarab/Common/Web.
+@for $p from 1 through $priorities {
+    .Scarab_TicketPriority_#{$p} {
+        color: desaturate(red, 100% - (100% / $priorities) * $p);
+    }
+}
+
+// TODO: Move this to lib/Scarab/Common/Web.
+div.Scarab_TicketConclusion {
+    font-style: italic;
+    line-height: $gr;
+}
+
+// TODO: Move this to lib/Scarab/Common/Web.
+pre.Scarab_TicketConclusion {
+    @include Scarab_Preformatted();
+}
+
+// TODO: Move this to lib/Scarab/Common/Web.
+.Scarab_TicketCommentBody {
+    @include Scarab_Preformatted();
+}
+
+// TODO: Move this to lib/Scarab/CreateTicket.
+.Scarab_CreateTicket {
+    @include Scarab_Form();
+}
+
+// TODO: Move this to lib/Scarab/Dashboard.
+.Scarab_Dashboard {
+    & > a {
+        $imageSize: 100px;
+        $imagePadding: 9px;
+
+        background-repeat: no-repeat;
+        display: inline-block;
+        line-height: $gr;
+        margin: -$imagePadding;
+        margin-right: -$imagePadding + $gr * $unit;
+        padding-top: $imageSize;
+        text-align: center;
+        width: $imageSize;
+
+        &.listTickets  { background-image: url('/Static/ListTickets.svg' ); }
+        &.viewTicket   { background-image: url('/Static/ViewTicket.svg'  ); }
+        &.createTicket { background-image: url('/Static/CreateTicket.svg'); }
+        &.planCycle    { background-image: url('/Static/PlanCycle.svg'   ); }
+        &.listUseCases { background-image: url('/Static/ListUseCases.svg'); }
+    }
+}
+
+// TODO: Move this to lib/Scarab/ListTickets.
+.Scarab_ListTickets_Criteria {
+    @include Scarab_Form();
+    margin-bottom: $gr * $unit;
+}
+
+// TODO: Move this to lib/Scarab/ListTickets.
+.Scarab_ListTickets_List {
+    @include Scarab_DataTable();
+
+    & > tbody, & > thead {
+        & > tr {
+            & > .id       { text-align: left;   }
+            & > .priority { text-align: center; }
+            & > .summary  { text-align: left;   }
+            & > .created  { text-align: left;   }
+        }
+    }
+}
+
+// TODO: Move this to lib/Scarab/ViewTicket.
+.Scarab_ViewTicket {
+    display: grid;
+    gap: $gr * $unit;
+    grid-template-columns: 1fr 1fr;
+
+    & > .properties {
+        @include Scarab_PropertiesTable();
+        grid-area: 1 / 1 / 2 / 3;
+    }
+
+    & > .conclusion {
+        grid-area: 2 / 1 / 3 / 2;
+
+        & > h2 {
+            @include Scarab_Heading();
+        }
+    }
+
+    & > .comments {
+        grid-area: 2 / 2 / 3 / 3;
+
+        & > h2 {
+            @include Scarab_Heading();
+        }
+
+        & > .comment {
+            background: $background2;
+            border: solid 1px $foreground2;
+            padding: $gr * $unit - 1px;
+
+            &:not(:last-child) {
+                margin-bottom: $gr * $unit;
+            }
+
+            & > footer {
+                color: $foreground2;
+                line-height: $gr;
+                margin-top: $gr * $unit;
+                text-align: right;
+            }
+        }
+    }
+}
